@@ -14,7 +14,7 @@ from selenium.webdriver.chrome.service import Service
 
 from selenium.common.exceptions import InvalidSelectorException
 
-from connect_people.do_login.do_login import do_login
+from send_congrats_to_connectios.do_login.do_login import do_login
 from send_congrats_to_connectios.send_congrats_to_connectios import send_congrats_to_connectios
 from utils.logging.log_manager.log_manager import write_to_log
 
