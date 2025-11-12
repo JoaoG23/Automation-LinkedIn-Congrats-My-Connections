@@ -1,3 +1,5 @@
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 from time import sleep
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -17,14 +19,11 @@ def send_congrats_to_connectios(driver):
     button_my_network.click()
     
     sleep(3)
-    button_updated_connections = wait.until(
-        EC.element_to_be_clickable((By.XPATH, '//*[@id="workspace"]/div/div/main/div/section/div/div/nav/ul/li[2]/button'))
-    )
-    button_updated_connections.click()
+    driver.get("https://www.linkedin.com/mynetwork/catch-up/all/")
     
     sleep(7)
     
-    scroll_by_limit_connections(driver)
+    # scroll_by_limit_connections(driver)
     
     list_congrats = driver.find_elements(By.XPATH, './/*[@id="send-privately-small"]')
     
@@ -40,9 +39,16 @@ def send_congrats_to_connectios(driver):
                 if parent_element.tag_name == "span":
                     parent_element.click()
                     sleep(7)
-                    button_send_message = driver.find_element(By.XPATH, '//*[@id="root"]/dialog/div/div/div/div/div/button')
-                    button_send_message.click()
-                    sleep(6)
+                    # Envia a mensagem usando Ctrl+Enter
+                    actions = ActionChains(driver)
+
+                    actions.key_down(Keys.CONTROL).send_keys(Keys.ENTER).key_up(Keys.CONTROL).perform()
+                    sleep(3)
+                    
+                    # Pressiona ESC para fechar qualquer popup
+                    actions = ActionChains(driver)
+                    actions.send_keys(Keys.ESCAPE).perform()
+                    sleep(2)
                 print(f"Congratulação {i+1} enviada com sucesso")
             except ElementClickInterceptedException:
                     driver.execute_script("arguments[0].click();", congrat)
@@ -52,4 +58,3 @@ def send_congrats_to_connectios(driver):
             
         except Exception as e:
             print(f"Erro ao clicar no botão {i+1}: {e}")
-            continue

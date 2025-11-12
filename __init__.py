@@ -23,11 +23,16 @@ service = Service(ChromeDriverManager().install())
 
 driver = webdriver.Chrome(service=service, options=options)
 
-load_dotenv()
-
-    
 if __name__ == '__main__':
     try:
+        # Carrega ambiente de produção
+        if os.getenv("MY_ENV") == "prod":
+            load_dotenv('.env.prod')
+        # Carrega ambiente de desenvolvimento
+        load_dotenv()
+        
+        print('Ambiente de desenvolvimento:', os.getenv("MY_ENV"))
+        
         driver.maximize_window()
         
         user_login = {
@@ -41,10 +46,6 @@ if __name__ == '__main__':
    
     except WebDriverException as e:
         write_to_log(f"WebDriverException: {traceback.format_exc()}", type='error')
-    except NoSuchElementException as e:
-        write_to_log(f"NoSuchElementException: {traceback.format_exc()}", type='error')
-    except InvalidSelectorException as e:
-        write_to_log(f"InvalidSelectorException: {traceback.format_exc()}", type='error')
     except TimeoutException as e:
         write_to_log(f"TimeoutException: {traceback.format_exc()}", type='error')
     except Exception as e:
