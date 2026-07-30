@@ -40,7 +40,7 @@ if __name__ == '__main__':
             'password': os.getenv("PASSWORD_LINKEDIN" or '')
         }
         do_login(driver, user_login)
-        sleep(11)
+        sleep(20)
         
         send_congrats_to_connectios(driver)
    
