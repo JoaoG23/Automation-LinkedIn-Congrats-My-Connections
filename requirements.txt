@@ -1,2 +1,5 @@
-selenium
-webdriver-manager
+playwright
+python-dotenv
+ollama
+pytest
+pytest-asyncio
