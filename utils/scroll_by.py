@@ -60,5 +60,17 @@ async def rolar_pagina_para_carregar_conteudo(
     await asyncio.sleep(tempo_espera_segundos)
 
 
-# Alias mantido para retrocompatibilidade
-scroll_page = rolar_pagina_para_carregar_conteudo
+async def scroll_page(
+    pagina: Page,
+    scroll_times: int = 3,
+    delay_seconds: float = 2.5,
+    quantidade_rolagens: int = None,
+    tempo_espera_segundos: float = None,
+) -> None:
+    """Wrapper de compatibilidade para rolar_pagina_para_carregar_conteudo."""
+    rolagens = quantidade_rolagens if quantidade_rolagens is not None else scroll_times
+    tempo = tempo_espera_segundos if tempo_espera_segundos is not None else delay_seconds
+    await rolar_pagina_para_carregar_conteudo(
+        pagina, quantidade_rolagens=rolagens, tempo_espera_segundos=tempo
+    )
+

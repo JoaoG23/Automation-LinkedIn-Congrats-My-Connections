@@ -9,7 +9,8 @@ from send_congrats.button_finder import (
 )
 from send_congrats.chat_messenger import enviar_mensagem_no_chat_modal
 from utils.llm_message import generate_message_with_ai
-from utils.scroll_by import scroll_page
+from utils.scroll_by import rolar_pagina_para_carregar_conteudo, scroll_page
+
 
 
 async def clicar_botao_carregar_mais_se_existir(pagina: Page) -> None:
@@ -86,8 +87,10 @@ async def enviar_mensagens_parabens_conexoes(
             conjunto_rotulos_processados.add(rotulo_identificador)
 
         else:
-            await clicar_botao_carregar_mais_se_existir(pagina)
-            await scroll_page(pagina, scroll_times=2, delay_seconds=2.0)
+            await rolar_pagina_para_carregar_conteudo(
+                pagina, quantidade_rolagens=2, tempo_espera_segundos=2.0
+            )
+
 
             existem_novos_cards = await verificar_se_existem_novos_botoes(
                 pagina, conjunto_rotulos_processados
