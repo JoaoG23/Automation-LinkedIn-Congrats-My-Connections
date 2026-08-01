@@ -6,7 +6,8 @@ from utils.do_login import do_login
 from send_congrats.send_congrats import send_congrats_to_connections
 
 if hasattr(sys.stdout, "reconfigure"):
-    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)
+
 
 async def main():
     print("=================== LINKEDIN CONGRATS BOT (PLAYWRIGHT) ===================")
